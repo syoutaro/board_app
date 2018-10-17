@@ -10,8 +10,16 @@ class BoardsController < ApplicationController
   end
 
   def create
-    board = Board.create(board_params)
-    redirect_to root_path
+    board = Board.new(board_params)
+    if board.save
+      flash[:notice] = "#{board.title}の記事を作成しました。"
+      redirect_to board
+    else
+      redirect_to new_board_path, flash: {
+        board: board,
+        error_messages: board.errors.full_messages
+      }
+    end
   end
 
   def show
@@ -27,6 +35,7 @@ class BoardsController < ApplicationController
 
   def destroy
     @board.delete
+    flash[:notice] = "#{@board.title}の記事を削除しました。"
     redirect_to root_path
   end
 
