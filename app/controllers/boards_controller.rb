@@ -1,4 +1,5 @@
 class BoardsController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_target_board, only: %i[show edit update destroy]
 
   def index
@@ -28,11 +29,11 @@ class BoardsController < ApplicationController
   end
 
   def edit
-    flash[:notice] = "編集しました"
   end
 
   def update
     if @board.update(board_params)
+      flash[:notice] = "編集しました"
       redirect_to @board
     else
       redirect_to @board, flash: {
