@@ -18,6 +18,7 @@ gem 'hamlit-rails'
 gem 'erb2haml'
 gem 'kaminari'
 gem 'rails-flog', require: 'flog'
+gem 'rails_autolink'
 
 
 
