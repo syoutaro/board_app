@@ -9,7 +9,8 @@
           class: 'form-control boards__select',                                   |
           onchange: 'submit(this.form);'                                          |
         }                                                                         |
-    = link_to '新規作成',new_board_path, class: 'btn.btn-outline-dark'
+    - if user_signed_in?
+      = link_to '新規作成',new_board_path, class: 'btn.btn-outline-dark'
 - if flash[:notice]
   .alert.alert-danger= flash[:notice]
 %table.table.table-hover.boards__table
@@ -21,7 +22,8 @@
       %th 作成日時
       %th 更新日時
       %th
-      %th
+      - if user_signed_in?
+        %th
   %tbody
     - @boards.each do |board|
       %tr
@@ -31,6 +33,7 @@
         %td= board.created_at.to_s(:datetime)
         %td= board.updated_at.to_s(:datetime)
         %td= link_to '詳細', board, class: 'btn btn-outline-dark'
-        %td= link_to '削除', board, class: 'btn btn-outline-dark', method: :delete
+        - if user_signed_in?
+          %td= link_to '削除', board, class: 'btn btn-outline-dark', method: :delete, data: { confirm: '削除してよろしいですか？' }
 = paginate @boards
 

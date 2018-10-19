@@ -1,7 +1,8 @@
 .d-flex.align-items-center.mt-4.mb-4
   .ml-auto.boards__linkBox
     = link_to '一覧', boards_path, class: 'btn btn-outline-dark'
-    = link_to '編集', edit_board_path, class: 'btn btn-outline-dark'
+    - if user_signed_in?
+      = link_to '編集', edit_board_path, class: 'btn btn-outline-dark'
 - if flash[:notice]
   .alert.alert-primary= flash[:notice]
 
@@ -11,7 +12,7 @@
   .p-comment_listTitle
     コメント
     = render @board.comments
-
-= render partial: 'comments/form', locals: { comment: @comment }
+- if user_signed_in?
+  = render partial: 'comments/form', locals: { comment: @comment }
 
 
